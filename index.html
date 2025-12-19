@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="styles.css">
+
+    <title>Environmental trade-off calculator</title>
+</head>
+
+<body>
+    <header>
+        <div class="title">
+            <h1>🌿 Environmental Trade-off Calculator</h1>
+            <p class="subtitle">Estimate tree, patch and PPA trade-off</p>
+        </div>
+        
+        <div class="banner">
+            <img src="img/env_fig.png" alt="Comp">
+        </div>
+    </header>
+
+
+    <nav class="tabs">
+        <button id="tabIsolated" class="tab-button active" onclick="setMode('isolated')">
+            Isolated trees
+        </button>
+        <button id="tabPatch" class="tab-button" onclick="setMode('patch')">
+            Patch / area (m²)
+        </button>
+        <button id="tabApp" class="tab-button" onclick="setMode('app')">
+            PPA
+        </button>
+        <button id="tabStatus" class="tab-button" onclick="setMode('status')">
+            Species status
+        </button>
+    </nav>
+
+
+    <section id="isolatedSection" class="tab-section">
+
+        <section class="newItem">
+            <input
+                type="number"
+                id="treeQuantity"
+                placeholder="Quantity"
+                min="1"
+            />
+
+            <select id="treeGroup">
+                <option value="native">Native</option>
+                <option value="exotic">Exotic</option>
+            </select>
+
+            <select id="isolatedMunicipality">
+                <option value="">Select municipality</option>
+
+            </select>
+
+
+            <select id="treeEndangered">
+                <option value="false">Yes</option>
+                <option value="true">Not</option>
+            </select>
+
+            <button onclick="addItem()" class="addBtn">Add to list</button>
+            <button onclick="calculateTotal()" class="calcBtn">Calculate trade-off</button>
+        </section>
+
+        <section class="messages">
+            <div id="errorBox"></div>
+            <div id="totalBox">Total batch trade-off: 0</div>
+        </section>
+
+        <section class="items">
+            <table id="myTable">
+                <tr>
+                    <th>Quantity</th>
+                    <th>Type</th>
+                    <th>Municipality</th>
+                    <th>Tree trade-off</th>
+                    <th>Total Item trade-off</th>
+                    <th>
+                        <img
+                            src="https://cdn-icons-png.flaticon.com/512/126/126468.png"
+                            width="15"
+                            height="15"
+                            alt="Remover"
+                        />
+                    </th>
+                </tr>
+            </table>
+        </section>
+    </section>
+
+    
+    <section id="patchSection" class="tab-section" style="display:none;">
+        <section class="newItem">
+            <select id="patchMunicipality">
+                <option value="">Select municipality</option>
+                
+            </select>
+
+            <input
+                type="number"
+                id="patchArea"
+                placeholder="Patch area (m²)"
+                min="1"
+            />
+
+            <button onclick="addPatchItem()" class="addBtn">Add patch</button>
+            <button onclick="calculatePatchTotal()" class="calcBtn">Calculate trade-off</button>
+        </section>
+
+        <section class="messages">
+            <div id="errorBoxPatch"></div>
+            <div id="totalBoxPatch">Total batch compensation: 0</div>
+        </section>
+
+        <section class="items">
+            <table id="patchTable">
+                <thead>
+                    <tr>
+                        <th>Municipality</th>
+                        <th>Area (m²)</th>
+                        <th>Trade-off/m²</th>
+                        <th>Total trade-off patch</th>
+                        <th>
+                            <img
+                                src="https://cdn-icons-png.flaticon.com/512/126/126468.png"
+                                width="15"
+                                height="15"
+                                alt="Remover"
+                            >
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </section>
+    </section>
+
+    
+    <section id="statusSection" class="tab-section" style="display:none;">
+        <section class="newItem">
+          <input type="text" id="statusFamily" placeholder="Family (ex: ACANTHACEAE)" />
+          <input type="text" id="statusSpecie" placeholder="Specie (ex: Aphelandra squarrosa Nees)" />
+          <button onclick="consultStatus()" class="calcBtn">Check status</button>
+        </section>
+      
+        <section class="messages">
+          <div id="statusMessage"></div>
+        </section>
+      
+        <section class="items">
+          <table id="statusTable">
+            <thead>
+              <tr>
+                <th>Family</th>
+                <th>Specie</th>
+                <th>Status</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </section>
+      </section>
+
+
+
+<section id="appSection" class="tab-section" style="display:none;">
+
+    <section class="newItem">
+        <select id="appMunicipality">
+            <option value="">Select municipality</option>
+        </select>
+
+        <input type="number"
+               id="appQuantity"
+               placeholder="Quantity/area"
+               min="0" />
+
+        <button onclick="addAppItem()" class="addBtn">Add PPA</button>
+        <button onclick="calculateAppTotal()" class="calcBtn">Calculate trade-off</button>
+    </section>
+
+    <section class="messages">
+        <div id="errorBoxApp"></div>
+        <div id="totalBoxApp">Total PPA compensation: 0</div>
+    </section>
+
+    <section class="items">
+        <table id="appTable">
+            <thead>
+                <tr>
+                    <th>Municipality</th>
+                    <th>Area</th>
+                    <th>Trade-off area</th>
+                    <th>Total trade-off</th>
+                    <th>
+                        <img src="https://cdn-icons-png.flaticon.com/512/126/126468.png"
+                             width="15" height="15" alt="Remover" />
+                    </th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </section>
+</section>
+     
+    
+    <script src="scripts.js"></script>
+</body>
+</html>
