@@ -1,3 +1,7 @@
+# Contextual background
+
+In Brazil, every infrastructure project with medium/high environmental impact must have an environmental license. In order to do that, one of the steps is to estimate the trade-off needed depending on the impact caused. The math for doing that is relatively straightforward, however, each municipality has its owns rules of trade-off, and there is not a unified platform where the consultants can check the value per type of intervention, and per location. Usually this is a very manual process, where consultants need to visit governmental websites and go through multiple PDFs. Thus, the main motivation of this project is to create an unique platform where the consultants can go and get the trade-off values per type and location of intervention.
+
 # Environmental Trade-off Calculator – Frontend
 
 This repository contains only the web interface for the *Environmental Trade-off Calculator*, which communicates with a separate Flask API (backend) to estimate environmental compensation for isolated trees, forest patches, PPA areas, and to query species conservation status.
